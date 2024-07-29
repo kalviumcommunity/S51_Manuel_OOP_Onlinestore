@@ -24,65 +24,67 @@ public:
     virtual ~Product() {}
 };
 
+// Derived Class - Lipstick
 class Lipstick : public Product {
 public:
     void setBrand(const string& a) override {
-        brand = a;
+        this->brand = a;
     }
 
     void setShade(const string& b) override {
-        shade = b;
+        this->shade = b;
     }
 
     void setPrice(int c) override {
-        price = c;
+        this->price = c;
     }
 
     string getBrand() const override {
-        return brand;
+        return this->brand;
     }
 
     string getShade() const override {
-        return shade;
+        return this->shade;
     }
 
     int getPrice() const override {
-        return price;
+        return this->price;
     }
 
     void description() const override {
-        cout << "Lipstick - Brand: " << brand << ", Shade: " << shade << ", Price: Rs." << price << endl;
+        cout << "Lipstick - Brand: " << this->brand << ", Shade: " << this->shade << ", Price: Rs." << this->price << endl;
     }
 };
 
+// Derived Class - Gloss
 class Gloss : public Product {
 public:
     void setBrand(const string& a) override {
-        brand = a;
+        this->brand = a;
     }
 
     void setShade(const string& b) override {
-        shade = b;
+        this->shade = b;
     }
 
     void setPrice(int c) override {
-        price = c;
+        this->price = c;
     }
 
     string getBrand() const override {
-        return brand;
+        return this->brand;
     }
 
     string getShade() const override {
-        return shade;
+        return this->shade;
     }
 
     int getPrice() const override {
-        return price;
+        return this->price;
     }
 
     void description() const override {
-        cout << "Gloss - Brand: " << brand << ", Shade: " << shade << ", Price: Rs." << price << endl;
+        cout << "Gloss - Brand: " << this->brand << ", Shade: " << this->shade << ", Price: Rs." << this->price << endl;
     }
 };
 
@@ -104,3 +106,4 @@ int main() {
 
     return 0;
 }
+

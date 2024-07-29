@@ -19,7 +19,7 @@ public:
     virtual int getPrice() const = 0;
 
     virtual void description() const = 0;
-
+        // checking
     // Virtual destructor for proper cleanup of derived objects
     virtual ~Product() {}
 };

@@ -90,20 +90,27 @@ public:
 
 // Main Function
 int main() {
-    Lipstick mattelipstick;
-    mattelipstick.setBrand("Lakme");
-    mattelipstick.setShade("Red wine");
-    mattelipstick.setPrice(699);
+    // Arrays for the properties
+    std::string brands[] = {"Lakme", "Maybelline"};
+    std::string shades[] = {"Red Wine", "Crystal Clear"};
+    double prices[] = {699, 499};
 
-    mattelipstick.description();
+    // Array of Lipstick objects
+    Lipstick mattelipstick[2];
 
-    Gloss shinygloss;
-    shinygloss.setBrand("Maybelline");
-    shinygloss.setShade("Crystal Clear");
-    shinygloss.setPrice(499);
+    // Loop to initialize the objects
+    for (int i = 0; i < 2; ++i) {
+        mattelipstick[i].setBrand(brands[i]);
+        mattelipstick[i].setShade(shades[i]);
+        mattelipstick[i].setPrice(prices[i]);
+    }
 
-    shinygloss.description();
+    // Display the details of each lipstick
+    for (auto lipstick : mattelipstick) {
+        lipstick.description();
+    }
 
     return 0;
 }
+
 

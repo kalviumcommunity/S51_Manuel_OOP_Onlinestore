@@ -93,24 +93,28 @@ int main() {
     // Arrays for the properties
     std::string brands[] = {"Lakme", "Maybelline"};
     std::string shades[] = {"Red Wine", "Crystal Clear"};
-    double prices[] = {699, 499};
+    int prices[] = {699, 499};
 
-    // Array of Lipstick objects
-    Lipstick mattelipstick[2];
+    // Dynamically allocate array of pointers to Lipstick objects
+    Lipstick* mattelipstick[2];
 
-    // Loop to initialize the objects
+    // Loop to initialize the objects using dynamic memory allocation
     for (int i = 0; i < 2; ++i) {
-        mattelipstick[i].setBrand(brands[i]);
-        mattelipstick[i].setShade(shades[i]);
-        mattelipstick[i].setPrice(prices[i]);
+        mattelipstick[i] = new Lipstick();  // Allocate memory dynamically
+        mattelipstick[i]->setBrand(brands[i]);
+        mattelipstick[i]->setShade(shades[i]);
+        mattelipstick[i]->setPrice(prices[i]);
     }
 
     // Display the details of each lipstick
-    for (auto lipstick : mattelipstick) {
-        lipstick.description();
+    for (int i = 0; i < 2; ++i) {
+        mattelipstick[i]->description();
+    }
+
+    // Deallocate memory using delete
+    for (int i = 0; i < 2; ++i) {
+        delete mattelipstick[i];  // Release memory
     }
 
     return 0;
 }
-
-

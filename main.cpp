@@ -10,6 +10,9 @@ protected:
     int price;
 
 public:
+    static int totalProducts;  // Static variable to count total products
+    static int totalRevenue;   // Static variable to track total revenue
+
     virtual void setBrand(const string& a) = 0;
     virtual void setShade(const string& b) = 0;
     virtual void setPrice(int c) = 0;
@@ -24,9 +27,17 @@ public:
     virtual ~Product() {}
 };
 
+// Initialize static variables
+int Product::totalProducts = 0;
+int Product::totalRevenue = 0;
+
 // Derived Class - Lipstick
 class Lipstick : public Product {
 public:
+    Lipstick() {
+        totalProducts++;  // Increment totalProducts when a new Lipstick is created
+    }
+
     void setBrand(const string& a) override {
         this->brand = a;
     }
@@ -37,6 +48,7 @@ public:
 
     void setPrice(int c) override {
         this->price = c;
+        totalRevenue += c;  // Add the price to totalRevenue
     }
 
     string getBrand() const override {
@@ -54,11 +66,20 @@ public:
     void description() const override {
         cout << "Lipstick - Brand: " << this->brand << ", Shade: " << this->shade << ", Price: Rs." << this->price << endl;
     }
+
+    ~Lipstick() {
+        totalProducts--;  // Decrement totalProducts when a Lipstick is destroyed
+        totalRevenue -= this->price;  // Subtract the price from totalRevenue
+    }
 };
 
 // Derived Class - Gloss
 class Gloss : public Product {
 public:
+    Gloss() {
+        totalProducts++;  // Increment totalProducts when a new Gloss is created
+    }
+
     void setBrand(const string& a) override {
         this->brand = a;
     }
@@ -69,6 +90,7 @@ public:
 
     void setPrice(int c) override {
         this->price = c;
+        totalRevenue += c;  // Add the price to totalRevenue
     }
 
     string getBrand() const override {
@@ -85,6 +107,11 @@ public:
 
     void description() const override {
         cout << "Gloss - Brand: " << this->brand << ", Shade: " << this->shade << ", Price: Rs." << this->price << endl;
+    }
+
+    ~Gloss() {
+        totalProducts--;  // Decrement totalProducts when a Gloss is destroyed
+        totalRevenue -= this->price;  // Subtract the price from totalRevenue
     }
 };
 
@@ -111,10 +138,18 @@ int main() {
         mattelipstick[i]->description();
     }
 
+    // Display the static variables
+    cout << "Total Products: " << Product::totalProducts << endl;
+    cout << "Total Revenue: Rs." << Product::totalRevenue << endl;
+
     // Deallocate memory using delete
     for (int i = 0; i < 2; ++i) {
         delete mattelipstick[i];  // Release memory
     }
+
+    // Display the static variables after deletion
+    cout << "Total Products after deletion: " << Product::totalProducts << endl;
+    cout << "Total Revenue after deletion: Rs." << Product::totalRevenue << endl;
 
     return 0;
 }

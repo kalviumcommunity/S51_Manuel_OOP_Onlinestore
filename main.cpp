@@ -23,6 +23,12 @@ public:
 
     virtual void description() const = 0;
 
+    // Static member function to display static variables
+    static void displayStats() {
+        cout << "Total Products: " << totalProducts << endl;
+        cout << "Total Revenue: Rs." << totalRevenue << endl;
+    }
+
     // Virtual destructor for proper cleanup of derived objects
     virtual ~Product() {}
 };
@@ -138,18 +144,16 @@ int main() {
         mattelipstick[i]->description();
     }
 
-    // Display the static variables
-    cout << "Total Products: " << Product::totalProducts << endl;
-    cout << "Total Revenue: Rs." << Product::totalRevenue << endl;
+    // Use the static member function to display the statistics
+    Product::displayStats();
 
     // Deallocate memory using delete
     for (int i = 0; i < 2; ++i) {
         delete mattelipstick[i];  // Release memory
     }
 
-    // Display the static variables after deletion
-    cout << "Total Products after deletion: " << Product::totalProducts << endl;
-    cout << "Total Revenue after deletion: Rs." << Product::totalRevenue << endl;
+    // Display the static variables after deletion using the static function
+    Product::displayStats();
 
     return 0;
 }

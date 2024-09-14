@@ -121,6 +121,60 @@ public:
     }
 };
 
+// Derived Class - Foundation
+class Foundation : public Product {
+private:
+    string skinType; // New private member specific to Foundation
+
+public:
+    Foundation() {
+        totalProducts++;  // Increment totalProducts when a new Foundation is created
+    }
+
+    void setBrand(const string& a) override {
+        this->brand = a;
+    }
+
+    void setShade(const string& b) override {
+        this->shade = b;
+    }
+
+    void setPrice(int c) override {
+        this->price = c;
+        totalRevenue += c;  // Add the price to totalRevenue
+    }
+
+    void setSkinType(const string& type) {
+        this->skinType = type;
+    }
+
+    string getBrand() const override {
+        return this->brand;
+    }
+
+    string getShade() const override {
+        return this->shade;
+    }
+
+    string getSkinType() const {
+        return this->skinType;
+    }
+
+    int getPrice() const override {
+        return this->price;
+    }
+
+    void description() const override {
+        cout << "Foundation - Brand: " << this->brand << ", Shade: " << this->shade << ", Price: Rs." << this->price
+             << ", Skin Type: " << this->skinType << endl;
+    }
+
+    ~Foundation() {
+        totalProducts--;  // Decrement totalProducts when a Foundation is destroyed
+        totalRevenue -= this->price;  // Subtract the price from totalRevenue
+    }
+};
+
 // Main Function
 int main() {
     // Arrays for the properties
@@ -128,10 +182,8 @@ int main() {
     std::string shades[] = {"Red Wine", "Crystal Clear"};
     int prices[] = {699, 499};
 
-    // Dynamically allocate array of pointers to Lipstick objects
+    // Lipstick objects
     Lipstick* mattelipstick[2];
-
-    // Loop to initialize the objects using dynamic memory allocation
     for (int i = 0; i < 2; ++i) {
         mattelipstick[i] = new Lipstick();  // Allocate memory dynamically
         mattelipstick[i]->setBrand(brands[i]);
@@ -139,10 +191,20 @@ int main() {
         mattelipstick[i]->setPrice(prices[i]);
     }
 
+    // Foundation object
+    Foundation* foundation = new Foundation();
+    foundation->setBrand("Loreal");
+    foundation->setShade("Ivory");
+    foundation->setPrice(999);
+    foundation->setSkinType("Dry");
+
     // Display the details of each lipstick
     for (int i = 0; i < 2; ++i) {
         mattelipstick[i]->description();
     }
+
+    // Display foundation details
+    foundation->description();
 
     // Use the static member function to display the statistics
     Product::displayStats();
@@ -151,6 +213,7 @@ int main() {
     for (int i = 0; i < 2; ++i) {
         delete mattelipstick[i];  // Release memory
     }
+    delete foundation;
 
     // Display the static variables after deletion using the static function
     Product::displayStats();

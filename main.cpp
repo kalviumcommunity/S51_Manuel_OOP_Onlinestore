@@ -30,7 +30,9 @@ public:
     }
 
     // Virtual destructor for proper cleanup of derived objects
-    virtual ~Product() {}
+    virtual ~Product() {
+        cout << "Product destructor called!" << endl;
+    }
 };
 
 // Initialize static variables
@@ -40,8 +42,10 @@ int Product::totalRevenue = 0;
 // Derived Class - Lipstick
 class Lipstick : public Product {
 public:
+    // Default constructor
     Lipstick() {
         totalProducts++;  // Increment totalProducts when a new Lipstick is created
+        cout << "Lipstick constructor called!" << endl;
     }
 
     void setBrand(const string& a) override {
@@ -73,17 +77,21 @@ public:
         cout << "Lipstick - Brand: " << this->brand << ", Shade: " << this->shade << ", Price: Rs." << this->price << endl;
     }
 
+    // Destructor
     ~Lipstick() {
         totalProducts--;  // Decrement totalProducts when a Lipstick is destroyed
         totalRevenue -= this->price;  // Subtract the price from totalRevenue
+        cout << "Lipstick destructor called!" << endl;
     }
 };
 
 // Derived Class - Gloss
 class Gloss : public Product {
 public:
+    // Default constructor
     Gloss() {
         totalProducts++;  // Increment totalProducts when a new Gloss is created
+        cout << "Gloss constructor called!" << endl;
     }
 
     void setBrand(const string& a) override {
@@ -115,9 +123,11 @@ public:
         cout << "Gloss - Brand: " << this->brand << ", Shade: " << this->shade << ", Price: Rs." << this->price << endl;
     }
 
+    // Destructor
     ~Gloss() {
         totalProducts--;  // Decrement totalProducts when a Gloss is destroyed
         totalRevenue -= this->price;  // Subtract the price from totalRevenue
+        cout << "Gloss destructor called!" << endl;
     }
 };
 
@@ -127,8 +137,10 @@ private:
     string skinType; // New private member specific to Foundation
 
 public:
+    // Default constructor
     Foundation() {
         totalProducts++;  // Increment totalProducts when a new Foundation is created
+        cout << "Foundation constructor called!" << endl;
     }
 
     void setBrand(const string& a) override {
@@ -169,9 +181,11 @@ public:
              << ", Skin Type: " << this->skinType << endl;
     }
 
+    // Destructor
     ~Foundation() {
         totalProducts--;  // Decrement totalProducts when a Foundation is destroyed
         totalRevenue -= this->price;  // Subtract the price from totalRevenue
+        cout << "Foundation destructor called!" << endl;
     }
 };
 

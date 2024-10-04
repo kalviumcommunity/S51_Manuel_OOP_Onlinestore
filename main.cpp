@@ -12,6 +12,7 @@ public:
     static int totalProducts;  // Static variable to count total products
     static int totalRevenue;   // Static variable to track total revenue
 
+    // Abstract class with pure virtual functions
     virtual void setBrand(const string& a) = 0;
     virtual void setShade(const string& b) = 0;
     virtual void setPrice(int c) = 0;

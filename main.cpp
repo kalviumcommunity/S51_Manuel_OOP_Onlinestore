@@ -2,7 +2,6 @@
 #include <string>
 using namespace std;
 
-// Abstract Base Class
 class Product {
 protected:
     string brand;
@@ -23,25 +22,28 @@ public:
 
     virtual void description() const = 0;
 
-    // Static member function to display static variables
     static void displayStats() {
         cout << "Total Products: " << totalProducts << endl;
         cout << "Total Revenue: Rs." << totalRevenue << endl;
     }
 
-    // Virtual destructor for proper cleanup of derived objects
-    virtual ~Product() {}
+
+    virtual ~Product() {
+        cout << "Product destructor called!" << endl;
+    }
 };
 
 // Initialize static variables
 int Product::totalProducts = 0;
 int Product::totalRevenue = 0;
 
-// Derived Class - Lipstick
+// Derived Class - Lipstick (Single Inheritance from Product)
 class Lipstick : public Product {
 public:
+    // Constructor
     Lipstick() {
-        totalProducts++;  // Increment totalProducts when a new Lipstick is created
+        totalProducts++;
+        cout << "Lipstick constructor called!" << endl;
     }
 
     void setBrand(const string& a) override {
@@ -54,7 +56,7 @@ public:
 
     void setPrice(int c) override {
         this->price = c;
-        totalRevenue += c;  // Add the price to totalRevenue
+        totalRevenue += c; 
     }
 
     string getBrand() const override {
@@ -73,17 +75,21 @@ public:
         cout << "Lipstick - Brand: " << this->brand << ", Shade: " << this->shade << ", Price: Rs." << this->price << endl;
     }
 
+    // Destructor
     ~Lipstick() {
-        totalProducts--;  // Decrement totalProducts when a Lipstick is destroyed
-        totalRevenue -= this->price;  // Subtract the price from totalRevenue
+        totalProducts--;  
+        totalRevenue -= this->price;  
+        cout << "Lipstick destructor called!" << endl;
     }
 };
 
-// Derived Class - Gloss
+// Derived Class - Gloss (Hierarchical Inheritance from Product)
 class Gloss : public Product {
 public:
+    // Constructor
     Gloss() {
-        totalProducts++;  // Increment totalProducts when a new Gloss is created
+        totalProducts++;  
+        cout << "Gloss constructor called!" << endl;
     }
 
     void setBrand(const string& a) override {
@@ -96,7 +102,7 @@ public:
 
     void setPrice(int c) override {
         this->price = c;
-        totalRevenue += c;  // Add the price to totalRevenue
+        totalRevenue += c;
     }
 
     string getBrand() const override {
@@ -115,20 +121,24 @@ public:
         cout << "Gloss - Brand: " << this->brand << ", Shade: " << this->shade << ", Price: Rs." << this->price << endl;
     }
 
+    // Destructor
     ~Gloss() {
-        totalProducts--;  // Decrement totalProducts when a Gloss is destroyed
-        totalRevenue -= this->price;  // Subtract the price from totalRevenue
+        totalProducts--;  
+        totalRevenue -= this->price;
+        cout << "Gloss destructor called!" << endl;
     }
 };
 
-// Derived Class - Foundation
+// Derived Class - Foundation (Single Inheritance with Extension)
 class Foundation : public Product {
 private:
-    string skinType; // New private member specific to Foundation
+    string skinType; 
 
 public:
+    // Constructor
     Foundation() {
-        totalProducts++;  // Increment totalProducts when a new Foundation is created
+        totalProducts++;  
+        cout << "Foundation constructor called!" << endl;
     }
 
     void setBrand(const string& a) override {
@@ -141,7 +151,7 @@ public:
 
     void setPrice(int c) override {
         this->price = c;
-        totalRevenue += c;  // Add the price to totalRevenue
+        totalRevenue += c;
     }
 
     void setSkinType(const string& type) {
@@ -169,9 +179,11 @@ public:
              << ", Skin Type: " << this->skinType << endl;
     }
 
+    // Destructor
     ~Foundation() {
-        totalProducts--;  // Decrement totalProducts when a Foundation is destroyed
-        totalRevenue -= this->price;  // Subtract the price from totalRevenue
+        totalProducts--;  
+        totalRevenue -= this->price;
+        cout << "Foundation destructor called!" << endl;
     }
 };
 
@@ -182,40 +194,34 @@ int main() {
     std::string shades[] = {"Red Wine", "Crystal Clear"};
     int prices[] = {699, 499};
 
-    // Lipstick objects
+    // Create Lipstick objects (demonstrating single inheritance)
     Lipstick* mattelipstick[2];
     for (int i = 0; i < 2; ++i) {
-        mattelipstick[i] = new Lipstick();  // Allocate memory dynamically
+        mattelipstick[i] = new Lipstick();  
         mattelipstick[i]->setBrand(brands[i]);
         mattelipstick[i]->setShade(shades[i]);
         mattelipstick[i]->setPrice(prices[i]);
     }
 
-    // Foundation object
     Foundation* foundation = new Foundation();
     foundation->setBrand("Loreal");
     foundation->setShade("Ivory");
     foundation->setPrice(999);
     foundation->setSkinType("Dry");
 
-    // Display the details of each lipstick
     for (int i = 0; i < 2; ++i) {
         mattelipstick[i]->description();
     }
-
-    // Display foundation details
     foundation->description();
 
-    // Use the static member function to display the statistics
     Product::displayStats();
 
-    // Deallocate memory using delete
+
     for (int i = 0; i < 2; ++i) {
-        delete mattelipstick[i];  // Release memory
+        delete mattelipstick[i];  
     }
     delete foundation;
 
-    // Display the static variables after deletion using the static function
     Product::displayStats();
 
     return 0;

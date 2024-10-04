@@ -20,13 +20,14 @@ public:
     virtual string getShade() const = 0;
     virtual int getPrice() const = 0;
 
+    // Overloaded description function for polymorphism
     virtual void description() const = 0;
+    virtual void description(bool detailed) const = 0; // Overloaded function
 
     static void displayStats() {
         cout << "Total Products: " << totalProducts << endl;
         cout << "Total Revenue: Rs." << totalRevenue << endl;
     }
-
 
     virtual ~Product() {
         cout << "Product destructor called!" << endl;
@@ -56,52 +57,6 @@ public:
 
     void setPrice(int c) override {
         this->price = c;
-        totalRevenue += c; 
-    }
-
-    string getBrand() const override {
-        return this->brand;
-    }
-
-    string getShade() const override {
-        return this->shade;
-    }
-
-    int getPrice() const override {
-        return this->price;
-    }
-
-    void description() const override {
-        cout << "Lipstick - Brand: " << this->brand << ", Shade: " << this->shade << ", Price: Rs." << this->price << endl;
-    }
-
-    // Destructor
-    ~Lipstick() {
-        totalProducts--;  
-        totalRevenue -= this->price;  
-        cout << "Lipstick destructor called!" << endl;
-    }
-};
-
-// Derived Class - Gloss (Hierarchical Inheritance from Product)
-class Gloss : public Product {
-public:
-    // Constructor
-    Gloss() {
-        totalProducts++;  
-        cout << "Gloss constructor called!" << endl;
-    }
-
-    void setBrand(const string& a) override {
-        this->brand = a;
-    }
-
-    void setShade(const string& b) override {
-        this->shade = b;
-    }
-
-    void setPrice(int c) override {
-        this->price = c;
         totalRevenue += c;
     }
 
@@ -117,27 +72,36 @@ public:
         return this->price;
     }
 
+    // Original description
     void description() const override {
-        cout << "Gloss - Brand: " << this->brand << ", Shade: " << this->shade << ", Price: Rs." << this->price << endl;
+        cout << "Lipstick - Brand: " << this->brand << ", Shade: " << this->shade << ", Price: Rs." << this->price << endl;
+    }
+
+    // Overloaded description function for detailed info
+    void description(bool detailed) const override {
+        cout << "Lipstick - Brand: " << this->brand 
+             << ", Shade: " << this->shade 
+             << ", Price: Rs." << this->price 
+             << (detailed ? " [Popular Choice!]" : "") << endl;
     }
 
     // Destructor
-    ~Gloss() {
-        totalProducts--;  
+    ~Lipstick() {
+        totalProducts--;
         totalRevenue -= this->price;
-        cout << "Gloss destructor called!" << endl;
+        cout << "Lipstick destructor called!" << endl;
     }
 };
 
 // Derived Class - Foundation (Single Inheritance with Extension)
 class Foundation : public Product {
 private:
-    string skinType; 
+    string skinType;
 
 public:
     // Constructor
     Foundation() {
-        totalProducts++;  
+        totalProducts++;
         cout << "Foundation constructor called!" << endl;
     }
 
@@ -174,14 +138,24 @@ public:
         return this->price;
     }
 
+    // Original description
     void description() const override {
-        cout << "Foundation - Brand: " << this->brand << ", Shade: " << this->shade << ", Price: Rs." << this->price
-             << ", Skin Type: " << this->skinType << endl;
+        cout << "Foundation - Brand: " << this->brand << ", Shade: " << this->shade 
+             << ", Price: Rs." << this->price << ", Skin Type: " << this->skinType << endl;
+    }
+
+    // Overloaded description function for detailed info
+    void description(bool detailed) const override {
+        cout << "Foundation - Brand: " << this->brand 
+             << ", Shade: " << this->shade 
+             << ", Price: Rs." << this->price 
+             << ", Skin Type: " << this->skinType 
+             << (detailed ? " [Best for dry skin!]" : "") << endl;
     }
 
     // Destructor
     ~Foundation() {
-        totalProducts--;  
+        totalProducts--;
         totalRevenue -= this->price;
         cout << "Foundation destructor called!" << endl;
     }
@@ -197,7 +171,7 @@ int main() {
     // Create Lipstick objects (demonstrating single inheritance)
     Lipstick* mattelipstick[2];
     for (int i = 0; i < 2; ++i) {
-        mattelipstick[i] = new Lipstick();  
+        mattelipstick[i] = new Lipstick();
         mattelipstick[i]->setBrand(brands[i]);
         mattelipstick[i]->setShade(shades[i]);
         mattelipstick[i]->setPrice(prices[i]);
@@ -210,15 +184,16 @@ int main() {
     foundation->setSkinType("Dry");
 
     for (int i = 0; i < 2; ++i) {
-        mattelipstick[i]->description();
+        mattelipstick[i]->description();  // Normal description
+        mattelipstick[i]->description(true);  // Detailed description (overloaded function)
     }
-    foundation->description();
+    foundation->description();  // Normal description
+    foundation->description(true);  // Detailed description (overloaded function)
 
     Product::displayStats();
 
-
     for (int i = 0; i < 2; ++i) {
-        delete mattelipstick[i];  
+        delete mattelipstick[i];
     }
     delete foundation;
 
